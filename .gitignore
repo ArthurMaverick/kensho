@@ -1,2 +1,5 @@
 
 dist/
+goreleaser
+coverage.out
+coverage.txt

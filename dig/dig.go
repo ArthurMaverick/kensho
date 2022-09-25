@@ -21,7 +21,6 @@ func createR(m *dns.Msg, c *dns.Client, config dns.ClientConfig) *dns.Msg {
 
 	r, _, err := c.Exchange(m, net.JoinHostPort(config.Servers[0], config.Port))
 	if r == nil {
-
 		log.Fatalf("*** error: %s\n", err.Error())
 	}
 	if err != nil {
@@ -49,7 +48,6 @@ func query(s string, ui uint16, c *dns.Client, config dns.ClientConfig) []string
 }
 
 func DnsChecker() []string {
-	// zerolog.SetGlobalLevel(zerolog.InfoLevel)
 
 	recs := map[string]uint16{
 		"a":       dns.TypeA,
@@ -101,7 +99,9 @@ func DnsChecker() []string {
 			recType = res
 		}
 	}
-	// zlog.Error().Msg("Missing parameters")
+	if _, ok := recs[recType]; !ok {
+		fmt.Println("Invalid record type")
+	}
 	finalValue := query(recType, recs[recType], c, *config)
 	return finalValue
 }
